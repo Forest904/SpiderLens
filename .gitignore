@@ -206,6 +206,15 @@ tempCodeRunnerFile.py
 # Ruff stuff:
 .ruff_cache/
 
+# SpiderLens local data and run artifacts
+data/spider/
+data/outputs/*
+!data/outputs/.gitkeep
+report/figures/*
+!report/figures/.gitkeep
+report/tables/*
+!report/tables/.gitkeep
+
 # PyPI configuration file
 .pypirc
 

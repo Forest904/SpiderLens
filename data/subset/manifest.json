@@ -1,0 +1,14 @@
+{
+  "examples": [
+    {
+      "example_id": "replace-me-001",
+      "db_id": "replace_me_db",
+      "question": "Replace this placeholder with a selected Spider question.",
+      "gold_sql": "SELECT 1;",
+      "oracle_tables": [
+        "replace_me_table"
+      ],
+      "rationale": "Placeholder showing the manual manifest shape."
+    }
+  ]
+}
