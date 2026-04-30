@@ -9,6 +9,11 @@ The project is built for the *Models and Practice of Neural Table Representation
 
 The goal is not to prove that one approach is universally better. Instead, SpiderLens characterizes the strengths, weaknesses, and failure modes of each method under a controlled experimental setup.
 
+## Project Tracking
+
+- [MILESTONES.md](MILESTONES.md) tracks the full assignment roadmap, acceptance criteria, and future work.
+- [LAB_JOURNAL.md](LAB_JOURNAL.md) records trial-and-error runs, mistakes, metrics, and lessons learned.
+
 ## Setup
 
 Create and activate a virtual environment:
