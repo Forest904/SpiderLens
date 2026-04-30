@@ -12,6 +12,8 @@ def parse_answer_rows(text: str) -> list[list[Any]]:
     match = FENCED_BLOCK.search(text)
     candidate = (match.group(1) if match else text).strip()
     data = json.loads(candidate)
+    if isinstance(data, dict) and "rows" in data:
+        data = data["rows"]
     if not isinstance(data, list):
         raise ValueError("Answer must be a JSON list")
     rows: list[list[Any]] = []

@@ -1,14 +1,34 @@
 {
   "examples": [
     {
-      "example_id": "replace-me-001",
-      "db_id": "replace_me_db",
-      "question": "Replace this placeholder with a selected Spider question.",
-      "gold_sql": "SELECT 1;",
+      "example_id": "dev-0001",
+      "db_id": "concert_singer",
+      "question": "How many singers do we have?",
+      "gold_sql": "SELECT count(*) FROM singer",
       "oracle_tables": [
-        "replace_me_table"
+        "singer"
       ],
-      "rationale": "Placeholder showing the manual manifest shape."
+      "rationale": "Small single-table count query for the first data wiring smoke test."
+    },
+    {
+      "example_id": "dev-0002",
+      "db_id": "concert_singer",
+      "question": "What is the total number of singers?",
+      "gold_sql": "SELECT count(*) FROM singer",
+      "oracle_tables": [
+        "singer"
+      ],
+      "rationale": "Paraphrase of the first count query to check consistency across equivalent questions."
+    },
+    {
+      "example_id": "dev-0003",
+      "db_id": "concert_singer",
+      "question": "Show name, country, age for all singers ordered by age from the oldest to the youngest.",
+      "gold_sql": "SELECT name ,  country ,  age FROM singer ORDER BY age DESC",
+      "oracle_tables": [
+        "singer"
+      ],
+      "rationale": "Single-table projection with ordering for a slightly richer first-run example."
     }
   ]
 }
