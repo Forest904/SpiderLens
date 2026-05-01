@@ -18,6 +18,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Run the Text-to-SQL pipeline.")
     parser.add_argument("--manifest", type=Path, default=Path("data/subset/manifest.json"))
     parser.add_argument("--output", type=Path, default=Path("data/outputs/text_to_sql.jsonl"))
+    parser.add_argument("--run-id", default="")
     parser.add_argument("--refresh-cache", action="store_true")
     args = parser.parse_args()
 
@@ -26,7 +27,10 @@ def main() -> None:
         LLMConfig(settings.llm_api_key, settings.llm_base_url, settings.llm_model, settings.temperature),
         settings.spiderlens_output_dir / "cache",
     )
-    records = [run_example(example, settings.spider_data_dir, client, args.refresh_cache) for example in load_manifest(args.manifest)]
+    records = [
+        run_example(example, settings.spider_data_dir, client, args.refresh_cache, args.run_id)
+        for example in load_manifest(args.manifest)
+    ]
     write_jsonl(args.output, records)
     print(f"Wrote {len(records)} records to {args.output}")
 

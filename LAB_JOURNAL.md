@@ -67,3 +67,57 @@ Interpretation:
 Next action:
 
 - Strengthen reporting so future runs have stable run IDs, metric deltas, failure labels, and reproducible run summaries.
+
+## 2026-05-01 - M1 Run-Scoped Reporting Pipeline
+
+Goal: make experiment reporting reproducible, traceable, and grouped by stable run ID.
+
+Run ID / command:
+
+```powershell
+.\.venv\Scripts\python.exe scripts\run_experiment.py --manifest data\subset\manifest.json --run-id run_0001
+```
+
+Changed files:
+
+- `scripts/run_experiment.py`
+- `scripts/make_report_assets.py`
+- `scripts/evaluate.py`
+- `scripts/run_text_to_sql.py`
+- `scripts/run_table_qa.py`
+- `src/spiderlens/reporting/`
+- `src/spiderlens/evaluation/compare.py`
+- `src/spiderlens/dataset/subset.py`
+- `tests/test_reporting.py`
+
+Generated metrics:
+
+| pipeline | cell_precision | cell_recall | tuple_cardinality |
+| --- | ---: | ---: | ---: |
+| table_qa | 0.6746 | 1.0 | 0.7222 |
+| text_to_sql | 1.0 | 1.0 | 1.0 |
+
+Report artifacts:
+
+- `report/runs/run_0001/summary.md`
+- `report/runs/run_0001/per_example_metrics.md`
+- `report/runs/run_0001/failure_breakdown.md`
+- `report/runs/run_0001/metric_deltas.md`
+- `report/runs/run_0001/metric_summary.png`
+- `report/runs/run_0001/lab_journal.md`
+- `data/outputs/runs/run_0001/metrics.jsonl`
+
+Failures or surprises:
+
+- No failed examples in this smoke run.
+- `query_pattern` reports as `unknown` because the current M0 manifest does not yet annotate patterns.
+- Metric deltas intentionally report that no baseline was provided.
+
+Interpretation:
+
+- M1 now has a run-scoped path for predictions, metrics, Markdown summaries, timestamped report snapshots, plots, metadata, and a per-run journal.
+- Failed examples will remain visible in per-example metrics and failure breakdowns because evaluation attaches `failure_label` and scores non-`ok` predictions as empty outputs.
+
+Next action:
+
+- Use `run_0001` as the reporting baseline before prompt, parser, or subset changes.

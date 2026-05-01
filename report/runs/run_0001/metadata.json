@@ -1,0 +1,54 @@
+{
+  "run_id": "run_0001",
+  "timestamp": "2026-05-01_140701",
+  "date": "2026-05-01",
+  "manifest_path": "data\\subset\\manifest.json",
+  "model": "gpt-4o-mini",
+  "base_url": "https://api.openai.com/v1",
+  "temperature": 0.0,
+  "prompt_strategy": "zero_shot_text_to_sql_and_direct_table_qa",
+  "serialization_strategy": "markdown_table_for_table_qa",
+  "record_counts": {
+    "text_to_sql": 3,
+    "table_qa": 3,
+    "metrics": 6
+  },
+  "prediction_paths": {
+    "text_to_sql": "data\\outputs\\runs\\run_0001\\text_to_sql.jsonl",
+    "table_qa": "data\\outputs\\runs\\run_0001\\table_qa.jsonl",
+    "metrics": "data\\outputs\\runs\\run_0001\\metrics.jsonl"
+  },
+  "commands": [
+    ".\\.venv\\Scripts\\python.exe scripts\\run_experiment.py --manifest data\\subset\\manifest.json --run-id run_0001 --baseline-metrics data\\outputs\\runs\\run_0000\\metrics.jsonl"
+  ],
+  "artifact_links": [
+    [
+      "summary",
+      "summary.md"
+    ],
+    [
+      "per-example metrics",
+      "per_example_metrics.md"
+    ],
+    [
+      "failure breakdown",
+      "failure_breakdown.md"
+    ],
+    [
+      "metric deltas",
+      "metric_deltas.md"
+    ],
+    [
+      "metric plot",
+      "metric_summary.png"
+    ],
+    [
+      "run journal",
+      "lab_journal.md"
+    ],
+    [
+      "metadata",
+      "metadata.json"
+    ]
+  ]
+}

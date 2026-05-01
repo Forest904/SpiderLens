@@ -18,6 +18,7 @@ def main() -> None:
     parser.add_argument("--manifest", type=Path, default=Path("data/subset/manifest.json"))
     parser.add_argument("--predictions", type=Path, nargs="+", required=True)
     parser.add_argument("--output", type=Path, default=Path("data/outputs/metrics.jsonl"))
+    parser.add_argument("--run-id", default="")
     args = parser.parse_args()
 
     settings = load_settings()
@@ -26,7 +27,10 @@ def main() -> None:
     for prediction_path in args.predictions:
         for record in read_jsonl(prediction_path):
             example = examples[record["example_id"]]
-            metrics.append(evaluate_record(record, example, settings.spider_data_dir))
+            metric = evaluate_record(record, example, settings.spider_data_dir)
+            if args.run_id:
+                metric["run_id"] = args.run_id
+            metrics.append(metric)
     write_jsonl(args.output, metrics)
     print(f"Wrote {len(metrics)} metric records to {args.output}")
 

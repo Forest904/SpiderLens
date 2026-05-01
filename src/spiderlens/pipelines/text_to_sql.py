@@ -14,7 +14,13 @@ from spiderlens.parsing.sql_output import extract_sql
 from spiderlens.prompts.text_to_sql import build_text_to_sql_prompt
 
 
-def run_example(example: SubsetExample, spider_dir: Path, client: CachedLLMClient, refresh: bool = False) -> dict[str, Any]:
+def run_example(
+    example: SubsetExample,
+    spider_dir: Path,
+    client: CachedLLMClient,
+    refresh: bool = False,
+    run_id: str = "",
+) -> dict[str, Any]:
     started = time.time()
     try:
         db_path = database_path(spider_dir, example.db_id)
@@ -24,6 +30,7 @@ def run_example(example: SubsetExample, spider_dir: Path, client: CachedLLMClien
         sql = extract_sql(completion["text"])
         result = execute_select(db_path, sql)
         return {
+            "run_id": run_id,
             "example_id": example.example_id,
             "db_id": example.db_id,
             "pipeline": "text_to_sql",
@@ -40,6 +47,7 @@ def run_example(example: SubsetExample, spider_dir: Path, client: CachedLLMClien
         }
     except Exception as exc:
         return {
+            "run_id": run_id,
             "example_id": example.example_id,
             "db_id": example.db_id,
             "pipeline": "text_to_sql",

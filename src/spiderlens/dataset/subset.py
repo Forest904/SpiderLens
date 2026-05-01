@@ -15,6 +15,7 @@ class SubsetExample:
     gold_sql: str
     oracle_tables: list[str]
     rationale: str = ""
+    query_pattern: str = "unknown"
 
 
 def load_manifest(path: Path) -> list[SubsetExample]:
@@ -28,6 +29,7 @@ def load_manifest(path: Path) -> list[SubsetExample]:
             gold_sql=item["gold_sql"],
             oracle_tables=list(item.get("oracle_tables", [])),
             rationale=item.get("rationale", ""),
+            query_pattern=item.get("query_pattern", "unknown"),
         )
         for item in examples
     ]

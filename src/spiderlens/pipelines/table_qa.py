@@ -26,7 +26,13 @@ def serialize_oracle_tables(database: Path, table_names: list[str]) -> str:
     return "\n\n".join(chunks)
 
 
-def run_example(example: SubsetExample, spider_dir: Path, client: CachedLLMClient, refresh: bool = False) -> dict[str, Any]:
+def run_example(
+    example: SubsetExample,
+    spider_dir: Path,
+    client: CachedLLMClient,
+    refresh: bool = False,
+    run_id: str = "",
+) -> dict[str, Any]:
     started = time.time()
     try:
         db_path = database_path(spider_dir, example.db_id)
@@ -35,6 +41,7 @@ def run_example(example: SubsetExample, spider_dir: Path, client: CachedLLMClien
         completion = client.complete(prompt, refresh=refresh)
         rows = parse_answer_rows(completion["text"])
         return {
+            "run_id": run_id,
             "example_id": example.example_id,
             "db_id": example.db_id,
             "pipeline": "table_qa",
@@ -49,6 +56,7 @@ def run_example(example: SubsetExample, spider_dir: Path, client: CachedLLMClien
         }
     except Exception as exc:
         return {
+            "run_id": run_id,
             "example_id": example.example_id,
             "db_id": example.db_id,
             "pipeline": "table_qa",
